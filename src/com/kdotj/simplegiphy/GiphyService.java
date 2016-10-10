@@ -11,6 +11,7 @@ import com.kdotj.simplegiphy.data.SimpleGiphyResponse;
 
 /**
  * Giphy Service for getting the Giphy data or Sticker data
+ * <p>Both stickers and Giphy's return the same types of objects, they just contain different information from the Giphy API</p>
  * @author kyle.jablonski
  *
  */

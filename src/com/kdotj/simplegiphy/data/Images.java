@@ -2,7 +2,14 @@ package com.kdotj.simplegiphy.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Images Object for the Giphy API containing all image information for a Giphy
+ * @author kyle.jablonski
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Images {
 	
@@ -167,5 +174,157 @@ public final class Images {
 
 	public void setOriginalStill(Still originalStill) {
 		this.originalStill = originalStill;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((downsized == null) ? 0 : downsized.hashCode());
+		result = prime * result
+				+ ((downsizedLarge == null) ? 0 : downsizedLarge.hashCode());
+		result = prime * result
+				+ ((downsizedMedium == null) ? 0 : downsizedMedium.hashCode());
+		result = prime * result
+				+ ((downsizedStill == null) ? 0 : downsizedStill.hashCode());
+		result = prime * result
+				+ ((fixedHeight == null) ? 0 : fixedHeight.hashCode());
+		result = prime
+				* result
+				+ ((fixedHeightDownsampled == null) ? 0
+						: fixedHeightDownsampled.hashCode());
+		result = prime
+				* result
+				+ ((fixedHeightSmall == null) ? 0 : fixedHeightSmall.hashCode());
+		result = prime
+				* result
+				+ ((fixedHeightSmallStill == null) ? 0 : fixedHeightSmallStill
+						.hashCode());
+		result = prime
+				* result
+				+ ((fixedHeightStill == null) ? 0 : fixedHeightStill.hashCode());
+		result = prime * result
+				+ ((fixedWidth == null) ? 0 : fixedWidth.hashCode());
+		result = prime
+				* result
+				+ ((fixedWidthDownsampled == null) ? 0 : fixedWidthDownsampled
+						.hashCode());
+		result = prime * result
+				+ ((fixedWidthSmall == null) ? 0 : fixedWidthSmall.hashCode());
+		result = prime
+				* result
+				+ ((fixedWidthSmallStill == null) ? 0 : fixedWidthSmallStill
+						.hashCode());
+		result = prime * result
+				+ ((fixedWidthStill == null) ? 0 : fixedWidthStill.hashCode());
+		result = prime * result
+				+ ((original == null) ? 0 : original.hashCode());
+		result = prime * result
+				+ ((originalStill == null) ? 0 : originalStill.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Images other = (Images) obj;
+		if (downsized == null) {
+			if (other.downsized != null)
+				return false;
+		} else if (!downsized.equals(other.downsized))
+			return false;
+		if (downsizedLarge == null) {
+			if (other.downsizedLarge != null)
+				return false;
+		} else if (!downsizedLarge.equals(other.downsizedLarge))
+			return false;
+		if (downsizedMedium == null) {
+			if (other.downsizedMedium != null)
+				return false;
+		} else if (!downsizedMedium.equals(other.downsizedMedium))
+			return false;
+		if (downsizedStill == null) {
+			if (other.downsizedStill != null)
+				return false;
+		} else if (!downsizedStill.equals(other.downsizedStill))
+			return false;
+		if (fixedHeight == null) {
+			if (other.fixedHeight != null)
+				return false;
+		} else if (!fixedHeight.equals(other.fixedHeight))
+			return false;
+		if (fixedHeightDownsampled == null) {
+			if (other.fixedHeightDownsampled != null)
+				return false;
+		} else if (!fixedHeightDownsampled.equals(other.fixedHeightDownsampled))
+			return false;
+		if (fixedHeightSmall == null) {
+			if (other.fixedHeightSmall != null)
+				return false;
+		} else if (!fixedHeightSmall.equals(other.fixedHeightSmall))
+			return false;
+		if (fixedHeightSmallStill == null) {
+			if (other.fixedHeightSmallStill != null)
+				return false;
+		} else if (!fixedHeightSmallStill.equals(other.fixedHeightSmallStill))
+			return false;
+		if (fixedHeightStill == null) {
+			if (other.fixedHeightStill != null)
+				return false;
+		} else if (!fixedHeightStill.equals(other.fixedHeightStill))
+			return false;
+		if (fixedWidth == null) {
+			if (other.fixedWidth != null)
+				return false;
+		} else if (!fixedWidth.equals(other.fixedWidth))
+			return false;
+		if (fixedWidthDownsampled == null) {
+			if (other.fixedWidthDownsampled != null)
+				return false;
+		} else if (!fixedWidthDownsampled.equals(other.fixedWidthDownsampled))
+			return false;
+		if (fixedWidthSmall == null) {
+			if (other.fixedWidthSmall != null)
+				return false;
+		} else if (!fixedWidthSmall.equals(other.fixedWidthSmall))
+			return false;
+		if (fixedWidthSmallStill == null) {
+			if (other.fixedWidthSmallStill != null)
+				return false;
+		} else if (!fixedWidthSmallStill.equals(other.fixedWidthSmallStill))
+			return false;
+		if (fixedWidthStill == null) {
+			if (other.fixedWidthStill != null)
+				return false;
+		} else if (!fixedWidthStill.equals(other.fixedWidthStill))
+			return false;
+		if (original == null) {
+			if (other.original != null)
+				return false;
+		} else if (!original.equals(other.original))
+			return false;
+		if (originalStill == null) {
+			if (other.originalStill != null)
+				return false;
+		} else if (!originalStill.equals(other.originalStill))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString(){
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			return objectMapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

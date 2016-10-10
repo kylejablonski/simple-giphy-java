@@ -15,12 +15,19 @@ import com.kdotj.simplegiphy.data.SimpleGiphyResponse;
 
 public class SimpleGiphyTest {
 	
+	static SimpleGiphy mInstance;
+	
+	static{
+		
+		mInstance = SimpleGiphy.getInstance();
+	}
+	
 	@Test
 	public void testRandom(){
 		System.out.println("testRandom() -> american+psycho");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		RandomGiphyResponse randomGiphyResponse = simpleGiphy.random("american+psycho",null);
+		
+		RandomGiphyResponse randomGiphyResponse = mInstance.random("american+psycho",null);
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(randomGiphyResponse.getRandomGiphy()));
 		} catch (JsonProcessingException e) {
@@ -33,8 +40,8 @@ public class SimpleGiphyTest {
 	public void testTrending(){
 		System.out.println("testTrending() -> 1, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		GiphyListResponse trendingResponse = simpleGiphy.trending("1", "pg-13");
+		
+		GiphyListResponse trendingResponse = mInstance.trending("1", "pg-13");
 		List<Giphy> trendingList = trendingResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(trendingList));
@@ -48,8 +55,8 @@ public class SimpleGiphyTest {
 	public void testSearch(){
 		System.out.println("testSearch() -> cats, 2, 0, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		GiphyListResponse listResponse = simpleGiphy.search("cats", "2", "0" , "pg-13");
+		
+		GiphyListResponse listResponse = mInstance.search("cats", "2", "0" , "pg-13");
 		List<Giphy> trendingList = listResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(listResponse));
@@ -63,8 +70,8 @@ public class SimpleGiphyTest {
 	public void testTranslate(){
 		System.out.println("testTranslate() -> awesome, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		SimpleGiphyResponse translateResponse = simpleGiphy.translate("awesome", "pg-13");
+		
+		SimpleGiphyResponse translateResponse = mInstance.translate("awesome", "pg-13");
 		Giphy giphy = translateResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(giphy));
@@ -78,8 +85,8 @@ public class SimpleGiphyTest {
 	public void testById(){
 		System.out.println("testById() -> 11V54nIH3eDQK4");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		SimpleGiphyResponse giphyByIdResponse = simpleGiphy.gifById("11V54nIH3eDQK4");
+		
+		SimpleGiphyResponse giphyByIdResponse = mInstance.gifById("11V54nIH3eDQK4");
 		Giphy giphy = giphyByIdResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(giphy));
@@ -93,8 +100,8 @@ public class SimpleGiphyTest {
 	public void testByIds(){
 		System.out.println("testByIds() -> 11V54nIH3eDQK4,3o85xGRWMlHdGB1vMs,1ecRID74uAe5i");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		GiphyListResponse giphyByIdResponse = simpleGiphy.gifByIds("11V54nIH3eDQK4,3o85xGRWMlHdGB1vMs,1ecRID74uAe5i");
+		
+		GiphyListResponse giphyByIdResponse = mInstance.gifByIds("11V54nIH3eDQK4,3o85xGRWMlHdGB1vMs,1ecRID74uAe5i");
 		List<Giphy> giphyListResponse = giphyByIdResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(giphyListResponse));

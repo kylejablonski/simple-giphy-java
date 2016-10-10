@@ -15,12 +15,19 @@ import com.kdotj.simplegiphy.data.SimpleGiphyResponse;
 
 public class SimpleGiphyStickerTest {
 
+    static SimpleGiphy mInstance;
+	
+	static{
+		
+		mInstance = SimpleGiphy.getInstance();
+	}
+	
 	@Test
 	public void testRandomSticker(){
 		System.out.println("testRandomSticker() -> american+psycho");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		RandomGiphyResponse randomGiphyResponse = simpleGiphy.randomSticker("oops", "pg-13");
+		
+		RandomGiphyResponse randomGiphyResponse = mInstance.randomSticker("oops", "pg-13");
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(randomGiphyResponse.getRandomGiphy()));
 		} catch (JsonProcessingException e) {
@@ -33,8 +40,8 @@ public class SimpleGiphyStickerTest {
 	public void testTrendingStickers(){
 		System.out.println("testTrendingStickers() -> 1, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		GiphyListResponse trendingResponse = simpleGiphy.trendingStickers("1", "pg-13");
+		
+		GiphyListResponse trendingResponse = mInstance.trendingStickers("1", "pg-13");
 		List<Giphy> trendingList = trendingResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(trendingResponse));
@@ -48,8 +55,7 @@ public class SimpleGiphyStickerTest {
 	public void testSearchStickers(){
 		System.out.println("testSearchSticker() -> cats, 2, 0, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		GiphyListResponse listResponse = simpleGiphy.searchStickers("cats", "2", "0" , "pg-13");
+		GiphyListResponse listResponse = mInstance.searchStickers("cats", "2", "0" , "pg-13");
 		List<Giphy> trendingList = listResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(listResponse));
@@ -63,8 +69,7 @@ public class SimpleGiphyStickerTest {
 	public void testTranslateSticker(){
 		System.out.println("testTranslateSticker() -> awesome, pg-13");
 		System.out.println("");
-		SimpleGiphy simpleGiphy = new SimpleGiphy();
-		SimpleGiphyResponse translateResponse = simpleGiphy.translateSticker("awesome", "pg-13");
+		SimpleGiphyResponse translateResponse = mInstance.translateSticker("awesome", "pg-13");
 		Giphy giphy = translateResponse.getData();
 		try {
 			System.out.println(new ObjectMapper().writeValueAsString(giphy));

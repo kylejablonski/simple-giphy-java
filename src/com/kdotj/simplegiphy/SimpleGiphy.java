@@ -16,7 +16,10 @@ import com.kdotj.simplegiphy.data.RandomGiphyResponse;
 import com.kdotj.simplegiphy.data.SimpleGiphyResponse;
 
 /**
- * Simple Giphy Api Library. All responses are currently returned using Gson and Json
+ * Simple Giphy Api Library. All responses are currently returned using Jackson and JSON
+ * <p>
+ * This class is setup as a singleton so once it is configured you can use the Instance to make
+ * all calls for the Library
  * <p>
  * NOTE: Support for XML may be needed and will only be created if requested
  * @author kyle.jablonski
@@ -33,17 +36,80 @@ public final class SimpleGiphy {
 	 * API key for fetching data
 	 * DEV API KEY, won't work for production Apps, replace with your own API Key
 	 */
-	private static final String GIPHY_DEV_API_KEY = "dc6zaTOxFJmzC";
-	
-	/**
-	 * Retrofit object for making requests
-	 */
-	private Retrofit mRetroFit;
+	private static String mGiphyApiKey = "dc6zaTOxFJmzC";
 	
 	/**
 	 * Interface implementation Object for the API calls
 	 */
-	private GiphyService mService;
+	private static GiphyService mService;
+	
+	/**
+	 * Singleton instance of this class for ease of use
+	 */
+	private static SimpleGiphy mInstance;
+	
+	/**
+	 * Api key setter for the Giphy API
+	 * <p>Call this before using the service, otherwise the dev API Key will be used. This is not recommended for use in production code.</p>
+	 * @param apiKey giphy api key
+	 */
+	public static void setApiKey(String apiKey){
+		mGiphyApiKey = apiKey;
+	}
+	
+	/**
+	 * Creates an Instance of {@link SimpleGiphy} if its null and
+	 * the {@link GiphyService} object for making API calls
+	 * @return this
+	 */
+	public static SimpleGiphy getInstance(){
+		if(mInstance == null){
+			mInstance = new SimpleGiphy();
+			mService = setupCall();
+		}		
+		return mInstance;
+	}
+	
+	/**
+	 * Private constructor hidden from the outside world.
+	 * {@see #getInstance}
+	 */
+	private SimpleGiphy(){}
+	
+	/**
+	 * Sets the API Call up by adding the api_key query param to every call
+	 */
+	private static GiphyService setupCall(){
+		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+		httpClient.addInterceptor(new Interceptor() {
+			
+			@Override
+			public Response intercept(Chain chain) throws IOException {
+				Request original = chain.request();
+				HttpUrl originalHttpUrl = original.url();
+				
+				HttpUrl url = originalHttpUrl.newBuilder()
+		                .addQueryParameter("api_key", mGiphyApiKey)
+		                .build();
+
+				Request request = original.newBuilder()
+//						.addHeader("","")
+						.method(original.method(), original.body())
+						.url(url)
+						.build();
+				
+				return chain.proceed(request);
+			}
+		});
+		
+		OkHttpClient client = httpClient.build();
+		Retrofit retroFit = new Retrofit.Builder()
+				.baseUrl(BASE_URL)
+				.client(client)
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build();
+		return retroFit.create(GiphyService.class);
+	}
 	
 	/**
 	 * Requests a list of Giphys by comma separated list of Id
@@ -51,8 +117,6 @@ public final class SimpleGiphy {
 	 * @return {@link GiphyListResponse} containing meta and pagination information
 	 */
 	public GiphyListResponse gifByIds(String giphyIds){
-		
-		setupCall();
 		
 		Call<GiphyListResponse> call = mService.gifByIds(giphyIds);
 		if(call != null){
@@ -73,8 +137,6 @@ public final class SimpleGiphy {
 	 */
 	public SimpleGiphyResponse gifById(String giphyId){
 		
-		setupCall();
-		
 		Call<SimpleGiphyResponse> call = mService.gifById(giphyId);
 		if(call != null){
 			try {
@@ -93,10 +155,9 @@ public final class SimpleGiphy {
 	 * @param limit the limit of results
 	 * @param offset the page offset
 	 * @param rating the rating for the giphy
-	 * @return the {@Link GiphyListResponse}
+	 * @return the {@link GiphyListResponse}
 	 */
 	public GiphyListResponse search(String query, String limit, String offset, String rating){
-		setupCall();
 		
 		Call<GiphyListResponse> call = mService.search(query, limit, offset, rating);
 		if(call != null){
@@ -114,11 +175,10 @@ public final class SimpleGiphy {
 	 * Requests the trending Giphy's same as the giphy.com homepage
 	 * @param limit the limit of results
 	 * @param rating the rating for the giphy's
-	 * @return the {@Link GiphyListResponse}
+	 * @return the {@link GiphyListResponse}
 	 */
 	public GiphyListResponse trending(String limit, String rating){
-		setupCall();
-		
+
 		Call<GiphyListResponse> call = mService.trending(limit, rating);
 		if(call != null){
 			try {
@@ -138,9 +198,7 @@ public final class SimpleGiphy {
 	 * @return the {@link RandomGiphyResponse}
 	 */
 	public RandomGiphyResponse random(String tag, String rating){
-		
-		setupCall();
-		
+
 		Call<RandomGiphyResponse> call = mService.random(tag, rating);
 		if(call != null){
 			try {
@@ -160,9 +218,7 @@ public final class SimpleGiphy {
 	 * @return the {@link SimpleGiphyResponse}
 	 */
 	public SimpleGiphyResponse translate(String term, String rating){
-		
-		setupCall();
-		
+
 		Call<SimpleGiphyResponse> call = mService.translate(term, rating);
 		if(call != null){
 			try {
@@ -184,7 +240,6 @@ public final class SimpleGiphy {
 	 * @return {@link GiphyListResponse}
 	 */
 	public GiphyListResponse searchStickers(String query, String limit, String offset, String rating){
-		setupCall();
 		
 		Call<GiphyListResponse> call = mService.searchStickers(query, limit, offset, rating);
 		if(call != null){
@@ -205,7 +260,6 @@ public final class SimpleGiphy {
 	 * @return {@link RandomGiphyResponse}
 	 */
 	public RandomGiphyResponse randomSticker(String tag, String rating){
-		setupCall();
 		
 		Call<RandomGiphyResponse> call = mService.randomSticker(tag, rating);
 		if(call != null){
@@ -226,8 +280,7 @@ public final class SimpleGiphy {
 	 * @return {@link GiphyListResponse}
 	 */
 	public GiphyListResponse trendingStickers(String limit, String rating){
-		setupCall();
-		
+
 		Call<GiphyListResponse> call = mService.trendingStickers(limit, rating);
 		if(call != null){
 			try {
@@ -248,8 +301,6 @@ public final class SimpleGiphy {
 	 */
 	public SimpleGiphyResponse translateSticker(String term, String rating){
 		
-		setupCall();
-		
 		Call<SimpleGiphyResponse> call = mService.translateSticker(term, rating);
 		if(call != null){
 			try {
@@ -261,41 +312,4 @@ public final class SimpleGiphy {
 		}
 		return null;
 	}
-	
-	/**
-	 * Sets the API Call up by adding the api_key query param to every call
-	 */
-	private void setupCall(){
-		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-		httpClient.addInterceptor(new Interceptor() {
-			
-			@Override
-			public Response intercept(Chain chain) throws IOException {
-				Request original = chain.request();
-				HttpUrl originalHttpUrl = original.url();
-				
-				HttpUrl url = originalHttpUrl.newBuilder()
-		                .addQueryParameter("api_key", GIPHY_DEV_API_KEY)
-		                .build();
-
-				Request request = original.newBuilder()
-//						.addHeader("","")
-						.method(original.method(), original.body())
-						.url(url)
-						.build();
-				
-				return chain.proceed(request);
-			}
-		});
-		
-		OkHttpClient client = httpClient.build();
-		mRetroFit = new Retrofit.Builder()
-				.baseUrl(BASE_URL)
-				.client(client)
-				.addConverterFactory(JacksonConverterFactory.create())
-				.build();
-		
-		mService = mRetroFit.create(GiphyService.class);
-	}
-
 }
