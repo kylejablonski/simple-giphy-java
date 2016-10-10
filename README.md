@@ -1,6 +1,12 @@
 # simple-giphy-java
-##Java Library for the Giphy API
+###Java Library for the Giphy API
 
+This library offers drop in Giphy functionality to your Java project, see simple-giphy-android for the 
+Android specific version of this library which is coming soon. Usage between normal java and android will
+be broken out since we may want to use the Parcelable interface in Android Projects.
+
+![Giphy Attribution][giphy-logo]
+[giphy-logo]: https://github.com/kylejablonski/simple-giphy-java/raw/master/images/Poweredby_640px-Black_VertLogo.png "Giphy Attribution"
 
 ####Master branch build status: 
 [![Build Status](https://travis-ci.org/kylejablonski/simple-giphy-java.svg?branch=master)](https://travis-ci.org/kylejablonski/simple-giphy-java)    
@@ -65,7 +71,7 @@ dependencies {
 SimpleGiphy.setApiKey("Your-API-KEY");
 
 // Call to get trending giphy's limit is 50, content rating is pg-13
-GiphyListResponse trendingResponse = mInstance.trending("50", "pg-13");
+GiphyListResponse trendingResponse = SimpleGiphy.getInstance().trending("50", "pg-13");
 
 // Get access to the List<Giphy>
 List<Giphy> trendingList = trendingResponse.getData();
