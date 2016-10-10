@@ -14,6 +14,7 @@ Maven Central is comming soon, however here is setup using jitpack
 gradle:
 
 >Step 1. Add the JitPack repository to your build file
+
 ```java
 
 	allprojects {
@@ -25,6 +26,7 @@ gradle:
 ```
 
 >Step 2. Add the dependency
+
 ```java
 	dependencies {
 	        compile 'com.github.kylejablonski:simple-giphy-java:1.0.0'
@@ -56,6 +58,8 @@ maven:
 
 Library Usage:
 
+Example: Trending Request
+
 ```java
     // Set up your API Key
 	SimpleGiphy.setApiKey("Your-API-KEY");
@@ -66,3 +70,5 @@ Library Usage:
 	// Get access to the List<Giphy>
 	List<Giphy> trendingList = trendingResponse.getData();
 ```
+
+Please see SimpleGiphyTest.java for a full look at the Supported Methods in this Library
