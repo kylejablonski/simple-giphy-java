@@ -3,4 +3,4 @@ Java Library for the Giphy API
 
 
 ####Master branch build status: 
-![](https://travis-ci.org/kylejablonski/MovingHelper.svg?branch=master)
+[![Build Status](https://travis-ci.org/kylejablonski/simple-giphy-java.svg?branch=master)](https://travis-ci.org/kylejablonski/simple-giphy-java)
