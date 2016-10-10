@@ -22,7 +22,7 @@ import com.kdotj.simplegiphy.data.SimpleGiphyResponse;
  * @author kyle.jablonski
  *
  */
-public class SimpleGiphy {
+public final class SimpleGiphy {
 	
 	/**
 	 * Base Url for the Giphy Api
