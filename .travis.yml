@@ -1,4 +1,4 @@
 language: java
-mvn test
+script: mvn test -f ./source/pom.xml
 jdk:
   - oraclejdk7
