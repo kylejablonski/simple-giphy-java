@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Giphy {
+public final class Giphy {
 	
 	@JsonProperty("type") private String type;
 	@JsonProperty("id") private String id;

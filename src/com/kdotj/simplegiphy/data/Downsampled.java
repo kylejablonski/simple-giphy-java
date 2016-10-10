@@ -2,7 +2,7 @@ package com.kdotj.simplegiphy.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Downsampled {
+public final class Downsampled {
 
 	@JsonProperty("url")
 	private String url;

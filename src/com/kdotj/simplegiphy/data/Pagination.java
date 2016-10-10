@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Pagination {
+public final class Pagination {
 	
 	@JsonProperty("total_count")
 	public Integer totalCount;

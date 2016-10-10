@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RandomGiphy{
+public final class RandomGiphy{
 	
 	@JsonProperty("type") public String type;
 	@JsonProperty("id") public String id;
