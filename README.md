@@ -6,7 +6,7 @@ Android specific version of this library which is coming soon. Usage between nor
 be broken out since we may want to use the Parcelable interface in Android Projects.
 
 ![Giphy Attribution][giphy-logo]
-[giphy-logo]: https://github.com/kylejablonski/simple-giphy-java/raw/master/images/Poweredby_640px-Black_VertLogo.png "Giphy Attribution"
+[giphy-logo]: https://github.com/kylejablonski/simple-giphy-java/raw/master/images/Poweredby_640px-Black_VertText.png "Giphy Attribution"
 
 ####Master branch build status: 
 [![Build Status](https://travis-ci.org/kylejablonski/simple-giphy-java.svg?branch=master)](https://travis-ci.org/kylejablonski/simple-giphy-java)    
