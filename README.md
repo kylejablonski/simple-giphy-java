@@ -76,5 +76,21 @@ GiphyListResponse trendingResponse = SimpleGiphy.getInstance().trending("50", "p
 // Get access to the List<Giphy>
 List<Giphy> trendingList = trendingResponse.getData();
 ```
+####Apache License 2.0
+```
+Copyright 2016 Kyle Jablonski
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
 
 Please see SimpleGiphyTest.java for a full look at the Supported Methods in this Library or consult the Javadoc
